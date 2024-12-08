@@ -7,9 +7,9 @@ import {
   putProducts,
 } from "../controllers/product.controller.js";
 
-router.get("/", getProducts);
-router.post("/", postProducts);
-router.put("/:id", putProducts);
-router.delete("/:id", deleteProducts);
+router.get("/api/products", getProducts);
+router.post("/api/products", postProducts);
+router.put("/api/products/:id", putProducts);
+router.delete("/api/products/:id", deleteProducts);
 
 export default router;

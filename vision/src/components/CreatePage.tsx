@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postProduct } from "@/store/productSlice";
+import { RootState } from "@/store/store";
 
 interface Product {
   name: string;
@@ -11,6 +12,9 @@ interface Product {
 
 const CreatePage = () => {
   const dispatch = useDispatch();
+  const { product: products } = useSelector(
+    (state: RootState) => state.products
+  );
 
   const [product, setProduct] = useState<Product>({
     name: "",
@@ -20,7 +24,24 @@ const CreatePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(postProduct(product));
+    const postData = async () => {
+      try {
+        const res = await fetch("http://localhost:7000/api/products", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        });
+        console.log({ process: true, message: "PostData successfully" });
+      } catch (error) {
+        console.error({ process: false, message: error });
+      }
+    };
+    postData();
+
+    const newProduct = { ...product, id: 123 + products.length };
+    dispatch(postProduct(newProduct));
     setProduct({ ...product, name: "", price: null, image: "" });
   };
 
