@@ -28,7 +28,7 @@ const productSlice = createSlice({
     },
 
     filterProducts: (state, action: PayloadAction<string>) => {
-      const filterChar = action.payload;
+      const filterChar = action.payload.toLowerCase();
       if (filterChar === "") {
         state.filterProduct = state.product;
       } else {
