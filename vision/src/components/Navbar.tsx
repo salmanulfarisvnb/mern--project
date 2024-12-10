@@ -2,9 +2,8 @@ import { IoMdCreate } from "react-icons/io";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterProducts } from "@/store/productSlice";
-import { RootState } from "@/store/store";
 
 const Navbar = () => {
   const dispatch = useDispatch();
