@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // Allow requests from your frontend origin
+    origin: "https://mern-project-frontend-k14p.onrender.com", // Allow requests from your frontend origin
   })
 );
 
