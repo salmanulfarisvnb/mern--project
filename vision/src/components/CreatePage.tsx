@@ -9,7 +9,6 @@ const CreatePage = () => {
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState<Product>({
-    _id: "",
     name: "",
     price: undefined,
     image: "",
