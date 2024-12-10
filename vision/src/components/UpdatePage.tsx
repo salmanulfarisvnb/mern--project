@@ -19,7 +19,6 @@ const UpdatePage = () => {
   }, [id]);
 
   const [product, setProduct] = useState<Product>({
-    _id: "",
     name: "",
     price: undefined,
     image: "",
