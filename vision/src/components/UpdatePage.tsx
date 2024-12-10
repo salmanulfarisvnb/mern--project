@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { postProduct, Product } from "@/store/productSlice";
+import { RootState } from "@/store/store";
 
-const CreatePage = () => {
+const UpdatePage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { product: products } = useSelector(
+    (state: RootState) => state.products
+  );
+  const [updateProduct, setUpdateProduct] = useState<Product>();
+  useEffect(() => {
+    let findProduct = products.find((item: any) => item._id === id);
+    setUpdateProduct(findProduct);
+  }, [id]);
 
   const [product, setProduct] = useState<Product>({
     name: "",
@@ -30,8 +40,8 @@ const CreatePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:7000/api/products", {
-      method: "POST",
+    await fetch(`http://localhost:7000/api/products/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,16 +54,16 @@ const CreatePage = () => {
 
   return (
     <div className="container flex flex-col items-center justify-center h-screen max-w-[700px] mx-auto">
-      <h1 className="text-2xl font-black mb-7">Create Product</h1>
+      <h1 className="text-2xl font-black mb-7">Update Product</h1>
       <form className="w-full border rounded" onSubmit={handleSubmit}>
         <div className="flex flex-col p-3 ">
           <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
             Product Name
           </label>
           <input
+            placeholder={updateProduct?.name}
             onChange={(e) => setProduct({ ...product, name: e.target.value })}
-            value={product.name}
-            className="w-full p-2 bg-transparent border-2 rounded-md outline-none focus:ring-2 active:ring-4 hover:ring-2"
+            className="w-full p-2 bg-transparent border-2 rounded-md outline-none placeholder:opacity-50 focus:ring-2 active:ring-4 hover:ring-2"
             type="text"
             required
           />
@@ -61,11 +71,11 @@ const CreatePage = () => {
             Price
           </label>
           <input
+            placeholder={updateProduct?.price?.toString()}
             onChange={(e) =>
               setProduct({ ...product, price: Number(e.target.value) })
             }
-            value={product.price === undefined ? "" : product.price}
-            className="w-full p-2 bg-transparent border-2 rounded-md outline-none 
+            className="w-full placeholder:opacity-50 p-2 bg-transparent border-2 rounded-md outline-none 
             [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:ring-2 active:ring-4 hover:ring-2"
             type="number"
             max={100000}
@@ -75,9 +85,9 @@ const CreatePage = () => {
             ImageLink
           </label>
           <input
+            placeholder={updateProduct?.image}
             onChange={(e) => setProduct({ ...product, image: e.target.value })}
-            value={product.image}
-            className="w-full p-2 bg-transparent border-2 rounded-md outline-none focus:ring-2 active:ring-4 hover:ring-2"
+            className="w-full p-2 bg-transparent border-2 rounded-md outline-none placeholder:opacity-50 focus:ring-2 active:ring-4 hover:ring-2"
             type="text"
             required
           />
@@ -89,4 +99,4 @@ const CreatePage = () => {
     </div>
   );
 };
-export default CreatePage;
+export default UpdatePage;
