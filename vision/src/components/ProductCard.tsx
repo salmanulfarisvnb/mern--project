@@ -34,12 +34,15 @@ const ProductCard = ({ _id, name, price, image }: ProductCardProps) => {
     id: string | undefined
   ) => {
     event?.preventDefault();
-    await fetch(`http://localhost:7000/api/products/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await fetch(
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/products/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     await fetchData();
     dispatch(filterDelete(_id));
   };
