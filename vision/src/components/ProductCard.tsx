@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   name: string;
-  _id: string;
+  _id: string | undefined;
   price: number | undefined;
   image: string;
 }

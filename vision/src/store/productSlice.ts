@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Product {
-  _id?: string;
+  _id?: string | undefined;
   name: string;
   price: number | undefined;
   image: string;
@@ -38,7 +38,7 @@ const productSlice = createSlice({
       }
     },
 
-    filterDelete: (state, action: PayloadAction<string>) => {
+    filterDelete: (state, action: PayloadAction<string | undefined>) => {
       const id = action.payload;
       if (id && state.filterProduct.length !== 0) {
         state.filterProduct = state.filterProduct.filter(
