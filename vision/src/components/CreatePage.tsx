@@ -16,7 +16,9 @@ const CreatePage = () => {
   const fetchData = async () => {
     const productCopy: Product[] = [];
     try {
-      const res = await fetch("http://localhost:7000/api/products");
+      const res = await fetch(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/products`
+      );
       const data = await res.json();
       data?.data?.map((item: any) => {
         const { _id, price, name, image } = item;
@@ -30,13 +32,16 @@ const CreatePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("http://localhost:7000/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    });
+    await fetch(
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/products`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+      }
+    );
     await fetchData();
     navigate("/");
     setProduct({ ...product, name: "", price: undefined, image: "" });

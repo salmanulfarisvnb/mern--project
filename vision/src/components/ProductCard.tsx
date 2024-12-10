@@ -15,7 +15,9 @@ const ProductCard = ({ _id, name, price, image }: ProductCardProps) => {
   const fetchData = async () => {
     const productCopy: Product[] = [];
     try {
-      const res: Response = await fetch("http://localhost:7000/api/products");
+      const res: Response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/products`
+      );
       const data = await res.json();
       data?.data?.map((item: any) => {
         const { _id, price, name, image } = item;
